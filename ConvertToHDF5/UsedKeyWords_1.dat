@@ -1,0 +1,67 @@
+ OUTWATCH                  ConvertToHDF5             Do not have               From File                 ************                                                 YES
+ ACTION                    ConvertToHDF5             Do not have               From Block                INTERPOLATE GRIDS                                            YES
+ FATHER_FILENAME           ConvertToHDF5             Do not have               From Block                /home/aoliveira/projects/hazrunoff/Galicia/work2008/2008-12- YES
+ FATHER_GRID_FILENAME      ConvertToHDF5             Do not have               From Block                ../ERA5_grid.dat                                             YES
+ OUTPUTFILENAME            ConvertToHDF5             Do not have               From Block                /home/aoliveira/projects/hazrunoff/Galicia/work2008/2008-12- YES
+ NEW_GRID_FILENAME         ConvertToHDF5             Do not have               From Block                /home/aoliveira/projects/hazrunoff/Galicia/Galicia_DTM.dat   YES
+ TYPE_OF_INTERPOLATION     ConvertToHDF5             1                         From Block                3                                                            YES
+ INTERPOLATION_WINDOW      ConvertToHDF5             Do not have               From Block                                                                             YES
+ START                     ConvertToHDF5             Do not have               From Block                2008.00000000000        12.0000000000000        31.000000000 YES
+ END                       ConvertToHDF5             Do not have               From Block                2008.00000000000        12.0000000000000        31.000000000 YES
+ INTERPOLATION3D           ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ INTERPOLATION_GRID_3D     ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ NEW_INTERPOLATION         ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ INTERPOLATION_WINDOW_AUTO ConvertToHDF5             TRUE                      From Block                TRUE                                                         YES
+ DO_NOT_BELIEVE_MAP        ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ EXTRAPOLATE_2D            ConvertToHDF5             0                         From Block                0                                                            YES
+ EXTRAPOLATE_LIMIT         ConvertToHDF5             -2.475000000000000E+015   From Block                -2.475000000000000E+015                                      YES
+ EXTRAPOLATE_PROFILE       ConvertToHDF5             TRUE                      From Block                TRUE                                                         YES
+ BASE_GROUP                ConvertToHDF5             /Results                  From Block                /Results                                                     YES
+ DO_NOT_BELIEVE_TIME       ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ NUM_SUB_GROUPS            ConvertToHDF5             0                         From Block                0                                                            YES
+ STATIONARY_MAPPING        ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ NULL_PRECIPITATION        ConvertToHDF5             FALSE                     From Block                FALSE                                                        YES
+ ILB_IUB                   HorizontalGrid            Do not have               From File                 1         355                                                YES
+ JLB_JUB                   HorizontalGrid            Do not have               From File                 1          19                                                YES
+ HALOPOINTS                HorizontalGrid            3                         From File                 3                                                            YES
+ COORD_TIP                 HorizontalGrid            Do not have               From File                 4                                                            YES
+ LATITUDE                  HorizontalGrid            Do not have               From File                 0.000000000000000E+000                                       YES
+ LONGITUDE                 HorizontalGrid            Do not have               From File                 0.000000000000000E+000                                       YES
+ DATUM                     HorizontalGrid            3                         From File                 3                                                            YES
+ EASTING                   HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ NORTHING                  HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ PROJ_TYPE                 HorizontalGrid            11                        From File                 11                                                           YES
+ SP1                       HorizontalGrid            30.0000000000000          From File                 30.0000000000000                                             YES
+ SP2                       HorizontalGrid            60.0000000000000          From File                 60.0000000000000                                             YES
+ ORIGIN                    HorizontalGrid            Do not have               From File                 0.000000000000000E+000  0.000000000000000E+000               YES
+ GRID_ANGLE                HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ CONSTANT_SPACING_Y        Unknown Client            Do not have               From File                 FALSE                                                        YES
+ CONSTANT_SPACING_X        Unknown Client            Do not have               From File                 FALSE                                                        YES
+ FILL_VALUE                ModuleGridData            -99.0000000000000         From File                 -99.0000000000000                                            YES
+ TYPE_ZUV                  ModuleGridData            Z                         From File                 Z                                                            YES
+ EVOLUTION                 ModuleGridData            FALSE                     From File                 FALSE                                                        YES
+ CONSTANT_IN_SPACE         ModuleGridData            FALSE                     From File                 FALSE                                                        YES
+ DEFAULT_VALUE             ModuleGridData            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ ILB_IUB                   HorizontalGrid            Do not have               From File                 1         115                                                YES
+ JLB_JUB                   HorizontalGrid            Do not have               From File                 1         215                                                YES
+ HALOPOINTS                HorizontalGrid            3                         From File                 3                                                            YES
+ COORD_TIP                 HorizontalGrid            Do not have               From File                 4                                                            YES
+ LATITUDE                  HorizontalGrid            Do not have               From File                 42.7559980000000                                             YES
+ LONGITUDE                 HorizontalGrid            Do not have               From File                 -8.26382600000000                                            YES
+ DATUM                     HorizontalGrid            3                         From File                 3                                                            YES
+ EASTING                   HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ NORTHING                  HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ PROJ_TYPE                 HorizontalGrid            11                        From File                 11                                                           YES
+ SP1                       HorizontalGrid            30.0000000000000          From File                 30.0000000000000                                             YES
+ SP2                       HorizontalGrid            60.0000000000000          From File                 60.0000000000000                                             YES
+ ORIGIN                    HorizontalGrid            Do not have               From File                 -8.80132600000000        42.4684980000000                    YES
+ GRID_ANGLE                HorizontalGrid            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES
+ CONSTANT_SPACING_Y        Unknown Client            Do not have               From File                 TRUE                                                         YES
+ DY                        Unknown Client            Do not have               From File                 5.000000000000000E-003                                       YES
+ CONSTANT_SPACING_X        Unknown Client            Do not have               From File                 TRUE                                                         YES
+ DX                        Unknown Client            Do not have               From File                 5.000000000000000E-003                                       YES
+ FILL_VALUE                ModuleGridData            -99.0000000000000         From File                 -99.0000000000000                                            YES
+ TYPE_ZUV                  ModuleGridData            Z                         From File                 Z                                                            YES
+ EVOLUTION                 ModuleGridData            FALSE                     From File                 FALSE                                                        YES
+ CONSTANT_IN_SPACE         ModuleGridData            FALSE                     From File                 FALSE                                                        YES
+ DEFAULT_VALUE             ModuleGridData            0.000000000000000E+000    From File                 0.000000000000000E+000                                       YES

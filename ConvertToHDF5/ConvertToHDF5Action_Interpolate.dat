@@ -1,0 +1,26 @@
+<begin_file>
+ACTION                        : INTERPOLATE GRIDS
+TYPE_OF_INTERPOLATION         :  3
+!EXTRAPOLATE_2D                :  3
+START                         : begin_date
+END                           : end_date
+
+<<begin_father>>
+FATHER_FILENAME               : input_file
+FATHER_GRID_FILENAME          : father_grid
+LEVEL                         : 1
+<<end_father>>
+
+OUTPUTFILENAME                : output_file
+NEW_GRID_FILENAME             : casestudy_grid
+
+<<BeginFields>>
+air temperature
+wind velocity X
+wind velocity Y
+relative humidity
+cloud cover
+solar radiation
+precipitation
+<<EndFields>>
+<end_file>
