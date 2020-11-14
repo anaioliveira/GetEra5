@@ -17,7 +17,7 @@ import subprocess
 import numpy
 from netCDF4 import Dataset
 import cdsapi
-sys.path.insert(0, '/home/aoliveira/projects/hazrunoff/Galicia/aux_scripts')
+sys.path.insert(0, '/aux_scripts')
 import change_coordinates, calculate_new_fields, write_converttohdfaction_file
 
 def get_dates_py(d_str):
@@ -131,16 +131,16 @@ if __name__ == '__main__':
     end_date = "31/12/2008"
     parameters = ['10m_u_component_of_wind','10m_v_component_of_wind','10m_wind_speed','2m_dewpoint_temperature','2m_temperature','surface_solar_radiation_downwards','total_cloud_cover','total_precipitation']
     window = [1., 179., 350., 355.] #S/N/W/E
-    casestudy_grid = '/home/aoliveira/projects/hazrunoff/Galicia/Galicia_DTM.dat'
+    casestudy_grid = 'Galicia_Meteo.dat'
     #######
     get_meteo_files = 0
     convert_grib_to_netcdf = 0
 
     #Define folders
-    work_folder = '/home/aoliveira/projects/hazrunoff/Galicia/work2008/'
+    work_folder = ''
     original_netcdf_ERA5 = '/home/aoliveira/disk_storage/ERA5/'
-    interpolated_files = '/home/aoliveira/disk_storage/hazrunoff/Galicia/'
-    convert_folder = '/home/aoliveira/projects/hazrunoff/Galicia/work2008/ConvertToHDF5/'
+    interpolated_files = ''
+    convert_folder = '/ConvertToHDF5/'
 
     #Define template files location
     convert_netcdftohdf = 'ConvertToHDF5Action_NetCDFToHDF.dat'
