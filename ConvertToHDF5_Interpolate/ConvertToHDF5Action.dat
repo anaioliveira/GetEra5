@@ -1,0 +1,26 @@
+<begin_file>
+ACTION                        : INTERPOLATE GRIDS
+TYPE_OF_INTERPOLATION         :  3
+!EXTRAPOLATE_2D                :  3
+START                         : 2001 01 01 00 00 00
+END                           : 2001 01 01 23 00 00
+
+<<begin_father>>
+FATHER_FILENAME               : E:/Omega/Meteo/Script/2001-01-01_.hdf5
+FATHER_GRID_FILENAME          : ../ERA5_grid.dat
+LEVEL                         : 1
+<<end_father>>
+
+OUTPUTFILENAME                : E:/Omega/Meteo/Script/2001-01-01__interpolated.hdf5
+NEW_GRID_FILENAME             : Maranhao.dat
+
+<<BeginFields>>
+air temperature
+wind velocity X
+wind velocity Y
+relative humidity
+cloud cover
+solar radiation
+precipitation
+<<EndFields>>
+<end_file>

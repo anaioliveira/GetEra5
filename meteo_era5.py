@@ -17,7 +17,7 @@ import subprocess
 import numpy
 from netCDF4 import Dataset
 import cdsapi
-sys.path.insert(0, '/aux_scripts')
+sys.path.insert(0, 'E:/Omega/Meteo/Script/aux_scripts')
 import change_coordinates, calculate_new_fields, write_converttohdfaction_file
 
 def get_dates_py(d_str):
@@ -42,7 +42,7 @@ def change_date_to_era5(date_to_print):
 
     return d_era5
 
-def getERA5(date, parameters):
+def getERA5(date, parameters, w):
 
     year = date.split('-')[0]
     month = date.split('-')[1]
@@ -66,6 +66,7 @@ def getERA5(date, parameters):
                     '18:00','19:00','20:00',
                     '21:00','22:00','23:00'
                 ],
+        'area': w,
                 'format'      : 'netcdf'
         })
     r.download(date + '.nc')
@@ -127,20 +128,22 @@ def get_father_grid(hdf_input_file):
 ############# MAIN FUNCTION #############
 if __name__ == '__main__':
 
-    begin_date = "31/12/2008"
-    end_date = "31/12/2008"
-    parameters = ['10m_u_component_of_wind','10m_v_component_of_wind','10m_wind_speed','2m_dewpoint_temperature','2m_temperature','surface_solar_radiation_downwards','total_cloud_cover','total_precipitation']
-    window = [1., 179., 350., 355.] #S/N/W/E
-    casestudy_grid = 'Galicia_Meteo.dat'
+    begin_date = "01/01/2001"
+    end_date = "03/01/2001"
+    parameters = ['10m_u_component_of_wind', '10m_v_component_of_wind', '2m_dewpoint_temperature','2m_temperature', 'surface_solar_radiation_downwards', 'total_cloud_cover','total_precipitation']
+    window = [45, -20, 35, 0] #N/W/S/E
+    casestudy_grid = 'Maranhao.dat'
     #######
     get_meteo_files = 0
-    convert_grib_to_netcdf = 0
+    convert_and_interpolate = 1
+    transform_wind_to_2m = 1
 
     #Define folders
-    work_folder = ''
-    original_netcdf_ERA5 = '/home/aoliveira/disk_storage/ERA5/'
-    interpolated_files = ''
-    convert_folder = '/ConvertToHDF5/'
+    work_folder = 'E:/Omega/Meteo/Script/'
+    original_netcdf_ERA5 = 'E:/Omega/Meteo/Script/ERA5OriginalFiles/'
+    interpolated_files = 'E:/Omega/Meteo/Script/InterpolatedFiles/'
+    convert_folder = 'E:/Omega/Meteo/Script/ConvertToHDF5_Convert/'
+    interpolate_folder = 'E:/Omega/Meteo/Script/ConvertToHDF5_Interpolate/'
 
     #Define template files location
     convert_netcdftohdf = 'ConvertToHDF5Action_NetCDFToHDF.dat'
@@ -162,50 +165,42 @@ if __name__ == '__main__':
         date = change_date_to_era5(date_to_print)
         # Get ERA 5 file
         if get_meteo_files == 1:
-            getERA5(date, parameters)
+            getERA5(date, parameters, window)
+            shutil.move(date + '.nc ', original_netcdf_ERA5 + date + '.nc')
 
-            #Convert GRIB to NetCDF
-            if convert_grib_to_netcdf == 1:
-                print ('\x1b[0;36;40m Converting file from GRIB to NEtCDF... \x1b[0m')
-                subprocess.call('ncl_convert2nc ' + date + '.grib', shell=True)
-        
-            subprocess.call('mv ' + date + '.nc ' + original_netcdf_ERA5 + date + '.nc', shell=True)
+        # Get ERA 5 file
+        if convert_and_interpolate == 1:
+            shutil.copy(original_netcdf_ERA5 + date + '.nc', work_folder + date + '.nc')
 
-        shutil.copy(original_netcdf_ERA5 + date + '.nc', work_folder + date + '.nc')
-        
-        ##Clip NetCDF file
-        #if window[2] < 0:
-        #    window[2] = 360 - window[2]
-        #if window[3] < 0:
-        #    window[3] = 360 - window[3]
-        
-        print ('\x1b[0;36;40m Clipping NetCDF file... \x1b[0m')
-        subprocess.call('ncks -d latitude,' + str(window[0]) + ',' + str(window[1]) + ' -d longitude,' + \
-                str(window[2]) + ',' + str(window[3]) + ' ' + work_folder + date + '.nc -O ' + work_folder + date + '.nc', shell=True)
+            print ('\x1b[0;36;40m Making adjustments in fields... \x1b[0m')
+            #Modify longitude coordinates to [-180,180]
+            change_coordinates.change_coord(work_folder + date + '.nc')
 
-        print ('\x1b[0;36;40m Making adjustments in fields... \x1b[0m')
-        #Modify longitude coordinates to [-180,180]
-        change_coordinates.change_coord(work_folder + date + '.nc')
+            #Calculate new_fields
+            calculate_new_fields.calculate_fields(work_folder + date + '.nc', work_folder + date + '_.nc', transform_wind_to_2m)
 
-        #Calculate new_fields
-        calculate_new_fields.calculate_fields(work_folder + date + '.nc', work_folder + date + '_.nc')
+            #Get father grid
+            if actual_date_py == get_dates_py(begin_date):
+                get_father_grid(work_folder + date + '_.nc')
 
-        #Get father grid
-        get_father_grid(work_folder + date + '_.nc')
+            #Convert NetCDF to HDF5 (with MOHID tool)
+            os.chdir(convert_folder)
+            print ('\x1b[0;36;40m Converting NetCDF to HDF5... \x1b[0m')
+            write_converttohdfaction_file.write_file(convert_folder + convert_netcdftohdf, work_folder + date + '_.nc', 'convert')
+            os.system(convert_folder + "ConvertToHDF5.exe")
 
-        #Convert NetCDF to HDF5 (with MOHID tool)
-        os.chdir(convert_folder)
-        print ('\x1b[0;36;40m Converting NetCDF to HDF5... \x1b[0m')
-        write_converttohdfaction_file.write_file(convert_folder + convert_netcdftohdf, work_folder + date + '_.nc', 'convert')
-        os.system(convert_folder + "ConvertToHDF5.exe")
+            #Interpolate HDF5 file
+            os.chdir(interpolate_folder)
+            print ('\x1b[0;36;40m Interpolating HDF5... \x1b[0m')
+            write_converttohdfaction_file.write_file(interpolate_folder + interpolate, work_folder + date + '_.hdf5', 'interpolate', actual_date_py, casestudy_grid)
+            os.system(interpolate_folder + "ConvertToHDF5.exe")
+            shutil.move(work_folder + date + '__interpolated.hdf5', interpolated_files + date.replace('-', '') + '.hdf5')
+            sys.exit()
 
-        #Interpolate HDF5 file
-        print ('\x1b[0;36;40m Interpolating HDF5... \x1b[0m')
-        write_converttohdfaction_file.write_file(convert_folder + interpolate, work_folder + date + '_.hdf5', 'interpolate', actual_date_py, casestudy_grid)
-        os.system(convert_folder + "ConvertToHDF5.exe")
-        subprocess.call('mv ' + work_folder + date + '__interpolated.hdf5 ' + interpolated_files + date.replace('-', '') + '.hdf5', shell=True)
-
-        os.chdir(work_folder)
-        subprocess.call('rm *.hdf5 *.nc *.grib ', shell=True)
+            #Delete auxiliar files
+            os.chdir(work_folder)
+            for item in os.listdir(work_folder):
+                if item.endswith(".hdf5") or item.endswith(".nc"):
+                    os.remove(os.path.join(work_folder, item))
 
         actual_date_py += relativedelta(days=1)
